@@ -4,7 +4,11 @@
   "packageManager": "pnpm@11.0.7",
   "scripts": {
     "dev": "node ./node_modules/turbo/bin/turbo run dev --parallel",
+    "dev:admin": "node ./node_modules/pnpm/bin/pnpm.cjs --filter @knowledge/admin dev",
+    "dev:web": "node ./node_modules/pnpm/bin/pnpm.cjs --filter @knowledge/web dev",
     "build": "node ./node_modules/turbo/bin/turbo run build",
+    "build:admin": "node ./node_modules/pnpm/bin/pnpm.cjs --filter @knowledge/admin build",
+    "build:web": "node ./node_modules/pnpm/bin/pnpm.cjs --filter @knowledge/web build",
     "lint": "node ./node_modules/turbo/bin/turbo run lint",
     "typecheck": "node ./node_modules/turbo/bin/turbo run typecheck",
     "test": "node ./node_modules/turbo/bin/turbo run test"
