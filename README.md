@@ -83,6 +83,8 @@ pnpm dev
 
 如果你本地只想调某一侧，更推荐分别启动 `dev:admin` 或 `dev:web`。
 
+如果根脚本报 `Cannot find module ... node_modules\\pnpm\\bin\\pnpm.cjs`，说明之前的脚本路径已经过时；当前版本已经改成直接调用本地 `vite` / `next` 二进制，不再依赖 `pnpm.cjs` 或 `turbo --filter` 的二次发现逻辑。
+
 ## 打包与验证
 
 ```powershell

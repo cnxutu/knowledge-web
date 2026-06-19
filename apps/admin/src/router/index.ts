@@ -6,6 +6,7 @@ import LoginView from "@/views/LoginView.vue";
 import NavigationView from "@/views/NavigationView.vue";
 import RelationsView from "@/views/RelationsView.vue";
 import SearchConfigView from "@/views/SearchConfigView.vue";
+import TaxonomyView from "@/views/TaxonomyView.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -23,6 +24,7 @@ const router = createRouter({
         { path: "", redirect: "/overview" },
         { path: "overview", name: "overview", component: DashboardView },
         { path: "navigation", name: "navigation", component: NavigationView },
+        { path: "taxonomy", name: "taxonomy", component: TaxonomyView },
         { path: "relations", name: "relations", component: RelationsView },
         { path: "search", name: "search", component: SearchConfigView }
       ]
@@ -42,4 +44,3 @@ router.beforeEach((to) => {
 });
 
 export default router;
-

@@ -1,10 +1,16 @@
 <template>
   <div style="display: grid; gap: 20px">
+    <AdminPageHeader
+      eyebrow="Overview"
+      title="知识管理控制台"
+      description="后台首期聚焦知识目录、专题、概念、关系和搜索配置这几类元数据，先把内容结构稳定下来，再承接更复杂的 CMS 和搜索接入。"
+    />
+
     <div class="stat-grid">
-      <AdminStatCard label="一级导航" :value="snapshot?.navigationCount ?? 0" description="当前知识树已经有稳定的主分类入口。" />
+      <AdminStatCard label="文章数量" :value="snapshot?.articleCount ?? 0" description="当前后台维护的是知识正文入口与元数据映射。" />
       <AdminStatCard label="专题数量" :value="snapshot?.topicCount ?? 0" description="专题用于承载学习路径与问题域聚合。" />
       <AdminStatCard label="概念节点" :value="snapshot?.conceptCount ?? 0" description="概念节点将作为未来图谱的点位基础。" />
-      <AdminStatCard label="搜索提供方" :value="snapshot?.searchProvider ?? 'mock'" description="当前默认走 mock 搜索 provider，后续可切换 ES。" />
+      <AdminStatCard label="关系边数" :value="snapshot?.relationCount ?? 0" description="关系边是后续知识图谱、推荐跳转和场景串联的基础。" />
     </div>
 
     <div class="two-column">
@@ -24,11 +30,18 @@
         </el-space>
       </AdminSection>
     </div>
+
+    <AdminSection title="当前默认搜索设置" eyebrow="Search Baseline">
+      <el-descriptions :column="2" border>
+        <el-descriptions-item label="Provider">{{ snapshot?.searchProvider ?? "mock" }}</el-descriptions-item>
+        <el-descriptions-item label="一级导航">{{ snapshot?.navigationCount ?? 0 }}</el-descriptions-item>
+      </el-descriptions>
+    </AdminSection>
   </div>
 </template>
 
 <script setup lang="ts">
-import { AdminSection, AdminStatCard } from "@knowledge/ui-vue";
+import { AdminPageHeader, AdminSection, AdminStatCard } from "@knowledge/ui-vue";
 import { createMockAdminMetadataProvider } from "@knowledge/shared";
 import { onMounted, ref } from "vue";
 
@@ -38,4 +51,3 @@ onMounted(async () => {
   snapshot.value = await createMockAdminMetadataProvider().getSnapshot();
 });
 </script>
-

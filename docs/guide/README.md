@@ -99,6 +99,8 @@ pnpm dev
 - `pnpm dev:admin`
 - `pnpm dev:web`
 
+如果你看到类似 `Cannot find module ... node_modules\\pnpm\\bin\\pnpm.cjs` 的报错，先回到仓库根目录更新依赖并确认已使用当前仓库里的脚本定义；当前根脚本已经改成直接调用本地 `vite` / `next` 二进制，不再依赖手写的 `pnpm.cjs` 路径。
+
 ## 5. 打包与基础验证
 
 ### 根目录常用命令
@@ -299,4 +301,3 @@ Vue 后台组件放：
 5. 再尝试补一个前台页面块
 
 这样最容易建立整体感。
-

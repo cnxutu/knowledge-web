@@ -4,7 +4,15 @@ import matter from "gray-matter";
 import { mockArticles } from "@knowledge/shared";
 import { buildNavigationTree, createMockSearchProvider, type ArticleMeta, type KnowledgeArticle } from "@knowledge/shared";
 
-const articlesDir = path.join(process.cwd(), "content", "articles");
+export function resolveArticlesDir(cwd = process.cwd()) {
+  const appLocalDir = path.join(cwd, "content", "articles");
+  if (cwd.endsWith(path.join("apps", "web"))) {
+    return appLocalDir;
+  }
+  return path.join(cwd, "apps", "web", "content", "articles");
+}
+
+const articlesDir = resolveArticlesDir();
 
 export async function getArticleSlugs() {
   const entries = await fs.readdir(articlesDir);
@@ -60,4 +68,3 @@ export async function searchArticles(query: string) {
   const articles = await listArticles();
   return createMockSearchProvider(articles).search(query);
 }
-

@@ -1,7 +1,17 @@
 :root {
-  color: #261f16;
-  background: #f5efe4;
-  font-family: "Segoe UI", "PingFang SC", sans-serif;
+  color: #173347;
+  background: #f2f7fb;
+  font-family: "Segoe UI Variable", "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --admin-bg: #f2f7fb;
+  --admin-bg-soft: #f7fbfd;
+  --admin-panel: rgba(255, 255, 255, 0.96);
+  --admin-panel-alt: rgba(244, 249, 252, 0.94);
+  --admin-border: rgba(171, 193, 208, 0.34);
+  --admin-text: #173347;
+  --admin-text-soft: #607b8c;
+  --admin-accent: #0d7b7d;
+  --admin-accent-soft: #d8f1ec;
+  --admin-warning: #bc7a2a;
 }
 
 * {
@@ -13,8 +23,10 @@ body {
   min-width: 1200px;
   min-height: 100vh;
   background:
-    radial-gradient(circle at top left, rgba(238, 215, 178, 0.65), transparent 32%),
-    linear-gradient(180deg, #f6f1e8 0%, #efe5d6 100%);
+    radial-gradient(circle at top left, rgba(165, 224, 212, 0.28), transparent 30%),
+    radial-gradient(circle at top right, rgba(170, 204, 235, 0.24), transparent 26%),
+    linear-gradient(180deg, #f7fbfe 0%, #edf5fa 100%);
+  color: var(--admin-text);
 }
 
 a {
@@ -42,3 +54,95 @@ a {
   gap: 20px;
 }
 
+.page-grid {
+  display: grid;
+  gap: 20px;
+}
+
+.page-two-column {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(320px, 0.85fr);
+  gap: 20px;
+  align-items: start;
+}
+
+.search-form {
+  max-width: 720px;
+}
+
+.drawer-form {
+  display: grid;
+  gap: 4px;
+}
+
+.drawer-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.toolbar-meta {
+  color: #678293;
+  font-size: 13px;
+}
+
+.admin-shell :deep(.el-button--primary) {
+  --el-button-bg-color: #0d7b7d;
+  --el-button-border-color: #0d7b7d;
+  --el-button-hover-bg-color: #0f8c8e;
+  --el-button-hover-border-color: #0f8c8e;
+}
+
+.admin-shell :deep(.el-button.is-plain) {
+  --el-button-hover-text-color: #0d7b7d;
+}
+
+.admin-shell :deep(.el-tag--success.el-tag--plain) {
+  background: rgba(212, 244, 234, 0.82);
+  border-color: rgba(109, 191, 163, 0.34);
+  color: #156d59;
+}
+
+.admin-shell :deep(.el-tag--info.el-tag--plain) {
+  background: rgba(227, 238, 247, 0.84);
+  border-color: rgba(152, 183, 205, 0.34);
+  color: #44667d;
+}
+
+.admin-shell :deep(.el-tag--warning.el-tag--plain) {
+  background: rgba(251, 237, 207, 0.82);
+  border-color: rgba(215, 168, 84, 0.3);
+  color: #9b6822;
+}
+
+.admin-shell :deep(.el-table) {
+  --el-table-border-color: rgba(181, 201, 214, 0.34);
+  --el-table-header-bg-color: rgba(236, 245, 250, 0.9);
+  --el-table-row-hover-bg-color: rgba(235, 247, 249, 0.76);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.admin-shell :deep(.el-descriptions__body) {
+  background: transparent;
+}
+
+.login-page {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background:
+    radial-gradient(circle at top right, rgba(162, 223, 208, 0.32), transparent 28%),
+    radial-gradient(circle at bottom left, rgba(151, 194, 230, 0.26), transparent 30%),
+    linear-gradient(135deg, #f7fbfe 0%, #eaf4fa 100%);
+}
+
+.login-panel {
+  width: min(500px, 100%);
+  padding: 38px;
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(171, 193, 208, 0.32);
+  box-shadow: 0 24px 54px rgba(48, 83, 104, 0.12);
+}

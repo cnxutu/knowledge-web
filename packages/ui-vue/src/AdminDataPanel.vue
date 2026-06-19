@@ -1,13 +1,13 @@
 <template>
-  <section class="section-card">
-    <header class="section-header">
+  <section class="panel-card">
+    <header v-if="title || $slots.header" class="panel-header">
       <div>
-        <p class="section-eyebrow">{{ eyebrow }}</p>
-        <h2>{{ title }}</h2>
+        <h3 v-if="title">{{ title }}</h3>
+        <p v-if="description">{{ description }}</p>
       </div>
-      <slot name="actions" />
+      <slot name="header" />
     </header>
-    <div class="section-body">
+    <div class="panel-body">
       <slot />
     </div>
   </section>
@@ -15,13 +15,13 @@
 
 <script setup lang="ts">
 defineProps<{
-  title: string;
-  eyebrow?: string;
+  title?: string;
+  description?: string;
 }>();
 </script>
 
 <style scoped>
-.section-card {
+.panel-card {
   border-radius: 24px;
   padding: 22px;
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(244, 249, 252, 0.94) 100%);
@@ -29,29 +29,27 @@ defineProps<{
   box-shadow: 0 16px 42px rgba(47, 79, 99, 0.1);
 }
 
-.section-header {
+.panel-header {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   gap: 16px;
   margin-bottom: 18px;
 }
 
-.section-header h2 {
-  margin: 6px 0 0;
-  font-size: 22px;
+.panel-header h3 {
+  margin: 0;
+  font-size: 20px;
   color: #163247;
 }
 
-.section-eyebrow {
-  margin: 0;
-  color: #5d7b8f;
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
+.panel-header p {
+  margin: 8px 0 0;
+  color: #5e7687;
+  line-height: 1.6;
 }
 
-.section-body {
+.panel-body {
   display: grid;
   gap: 16px;
 }
