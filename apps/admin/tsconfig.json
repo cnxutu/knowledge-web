@@ -1,0 +1,28 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "types": [
+      "node"
+    ],
+    "paths": {
+      "@knowledge/shared": [
+        "../../packages/shared/src/index.ts"
+      ],
+      "@knowledge/api-contract": [
+        "../../packages/api-contract/src/index.ts"
+      ],
+      "@knowledge/ui-vue": [
+        "../../packages/ui-vue/src/index.ts"
+      ],
+      "@/*": [
+        "src/*"
+      ]
+    }
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.vue",
+    "src/**/*.d.ts"
+  ]
+}

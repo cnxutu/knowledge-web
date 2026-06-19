@@ -1,0 +1,31 @@
+---
+title: Redis 会话策略
+summary: 在需要可控失效、踢人和会话共享时，Redis Session 是怎样接入的。
+tags:
+  - redis
+  - session
+  - cluster
+concepts:
+  - redis
+  - session
+  - cookie
+categoryPath:
+  - 架构设计
+  - 认证鉴权
+  - 会话方案
+relatedArticles:
+  - security-login-overview
+updatedAt: 2026-06-19
+---
+
+# Redis 会话策略
+
+当业务强调后台可控、会话共享和强一致的失效能力时，Redis Session 往往比纯 JWT 更容易落地治理。
+
+## 关注点
+
+- Cookie 与 Session 的边界
+- Redis Key 设计
+- 集群下的失效控制
+- 与权限刷新策略的配合
+

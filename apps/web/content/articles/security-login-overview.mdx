@@ -1,0 +1,42 @@
+---
+title: 登录场景总览
+summary: 用一个完整登录链路把 Security、OAuth2、JWT、Session 和 Redis 串起来。
+tags:
+  - login
+  - security
+  - auth
+concepts:
+  - security
+  - oauth2
+  - jwt
+  - session
+  - redis
+categoryPath:
+  - 架构设计
+  - 认证鉴权
+  - 登录体系
+relatedArticles:
+  - jwt-token-flow
+  - redis-session-strategy
+updatedAt: 2026-06-19
+---
+
+# 登录场景总览
+
+个人知识库里的登录专题，不是把几个关键词并排放在一起，而是把它们当成一个完整场景去拆。
+
+## 一条完整链路
+
+- Security 负责过滤器链和认证上下文
+- OAuth2 负责更标准的授权协议能力
+- JWT 偏向无状态令牌
+- Session / Redis 更适合会话共享和后台可控失效
+
+## 为什么要形成知识图谱
+
+当你以后回看登录问题时，不应该只记得“怎么配”，还要能顺着问题域回到：
+
+- 哪些前置概念必须先掌握
+- 哪些方案是互补关系
+- 哪些坑通常在什么场景下出现
+

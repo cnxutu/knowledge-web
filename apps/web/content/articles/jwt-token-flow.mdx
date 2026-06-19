@@ -1,0 +1,32 @@
+---
+title: JWT 令牌链路
+summary: 梳理登录、签发、续签、鉴权和失效控制的关键节点。
+tags:
+  - jwt
+  - token
+  - security
+concepts:
+  - jwt
+  - claims
+  - signature
+categoryPath:
+  - 架构设计
+  - 认证鉴权
+  - 令牌策略
+relatedArticles:
+  - security-login-overview
+  - redis-session-strategy
+updatedAt: 2026-06-19
+---
+
+# JWT 令牌链路
+
+JWT 适合在多服务之间传递认证结果，但不意味着它可以独立解决所有登录问题。
+
+## 重点关注
+
+- 令牌签发时机
+- 令牌刷新策略
+- 黑名单与强制下线
+- 与权限缓存的协同
+

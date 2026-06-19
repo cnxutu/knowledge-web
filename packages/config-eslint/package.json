@@ -1,0 +1,17 @@
+{
+  "name": "@knowledge/config-eslint",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./react": "./react.mjs",
+    "./vue": "./vue.mjs"
+  },
+  "scripts": {
+    "build": "echo \"config package\"",
+    "lint": "echo \"config package\"",
+    "typecheck": "echo \"config package\"",
+    "test": "echo \"config package\""
+  }
+}
+

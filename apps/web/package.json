@@ -1,0 +1,32 @@
+{
+  "name": "@knowledge/web",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "lint": "echo \"web lint pending typed-eslint adoption\"",
+    "typecheck": "tsc --noEmit",
+    "test": "echo \"No automated web tests yet\""
+  },
+  "dependencies": {
+    "@knowledge/shared": "workspace:*",
+    "@knowledge/ui-react": "workspace:*",
+    "@tanstack/react-query": "^5.83.0",
+    "gray-matter": "^4.0.3",
+    "next": "^15.5.6",
+    "next-mdx-remote": "^5.0.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-markdown": "^10.1.0",
+    "zustand": "^5.0.7"
+  },
+  "devDependencies": {
+    "@knowledge/config-eslint": "workspace:*",
+    "@types/node": "^24.13.2",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "typescript": "^5.9.3"
+  }
+}

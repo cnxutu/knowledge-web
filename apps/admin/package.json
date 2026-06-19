@@ -1,0 +1,30 @@
+{
+  "name": "@knowledge/admin",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "echo \"admin lint pending typed-eslint adoption\"",
+    "typecheck": "vue-tsc --noEmit",
+    "test": "echo \"No automated admin tests yet\""
+  },
+  "dependencies": {
+    "@knowledge/api-contract": "workspace:*",
+    "@knowledge/shared": "workspace:*",
+    "@knowledge/ui-vue": "workspace:*",
+    "axios": "^1.12.2",
+    "element-plus": "^2.11.4",
+    "pinia": "^3.0.3",
+    "vue": "^3.5.21",
+    "vue-router": "^4.5.1"
+  },
+  "devDependencies": {
+    "@knowledge/config-eslint": "workspace:*",
+    "@vitejs/plugin-vue": "^6.0.1",
+    "typescript": "^5.9.3",
+    "vite": "^7.1.12",
+    "vue-tsc": "^2.2.12"
+  }
+}
