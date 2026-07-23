@@ -85,6 +85,12 @@ pnpm dev
 
 如果根脚本报 `Cannot find module ... node_modules\\pnpm\\bin\\pnpm.cjs`，说明之前的脚本路径已经过时；当前版本已经改成直接调用本地 `vite` / `next` 二进制，不再依赖 `pnpm.cjs` 或 `turbo --filter` 的二次发现逻辑。
 
+### Knowledge Workspace
+
+前台每日工作区位于 `/workspace`，通过 `NEXT_PUBLIC_KNOWLEDGE_WORKSPACE_API_URL` 指向后端 Workspace 服务；未配置时默认请求 `http://localhost:8091/api/workspace`。编辑中的当天草稿会保存到浏览器 LocalStorage，发布后由后端写入配置的 Obsidian Vault。
+
+知识文章录入位于 `/workspace/articles/new`，文章以 `knowledge-article` 类型保存，包含标题、稳定 Slug、摘要、标签、概念、分类路径、相关文章和 Markdown 正文；发布后写入 Vault 的 `知识沉淀/{slug}.md` 与 `.knowledge-hub/articles/{slug}.json`。
+
 ## 打包与验证
 
 ```powershell

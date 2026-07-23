@@ -42,9 +42,14 @@ export default async function HomePage() {
           <Link href="/search" style={{ display: "inline-block", marginTop: 16, color: "#f4c873" }}>
             进入搜索体验
           </Link>
+          <Link href="/workspace" style={{ display: "inline-block", marginTop: 16, marginLeft: 18, color: "#f4c873" }}>
+            打开每日工作区
+          </Link>
+          <Link href="/workspace/articles/new" style={{ display: "inline-block", marginTop: 16, marginLeft: 18, color: "#f4c873" }}>
+            录入知识文章
+          </Link>
         </section>
       </div>
     </main>
   );
 }
-
