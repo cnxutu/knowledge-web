@@ -147,9 +147,11 @@ pnpm build:web
 
 ## 推荐阅读顺序
 
-1. [docs/architecture/overview.md](D:/workspace/github/knowledge-web/docs/architecture/overview.md)
-2. [docs/guide/README.md](D:/workspace/github/knowledge-web/docs/guide/README.md)
-3. [docs/learning/README.md](D:/workspace/github/knowledge-web/docs/learning/README.md)
+1. [docs/architecture/overview.md](docs/architecture/overview.md)
+2. [docs/guide/README.md](docs/guide/README.md)
+3. [docs/learning/README.md](docs/learning/README.md)
+
+如果你是第一次进入项目，建议先读架构导览，再启动后台和前台；`legacy/*` 仅保留作历史迁移参考，新功能请放在 `apps/*` 或 `packages/*`。
 
 ## 补充说明
 

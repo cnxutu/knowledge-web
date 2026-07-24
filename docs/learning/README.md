@@ -1,204 +1,166 @@
-# 项目B学习目录
+# 后端开发者学习路线
 
-这份目录不是“把前端全学完”，而是围绕 `knowledge-web` 这个仓库，帮你作为后端开发者建立一条够用、可落地、能边做边学的路线。
+这条路线围绕当前仓库学习，不要求先把整个前端生态学完。目标是：能启动项目、读懂一条请求/渲染链路、知道改动应该落在哪一层，并能独立完成小功能。
 
-目标只有两个：
+## 推荐顺序
 
-1. 让你看得懂当前项目在做什么
-2. 让你知道下一步改功能时应该先补哪块知识
+1. JavaScript / TypeScript 模块、异步和类型。
+2. pnpm workspace、Turborepo、Vite、Next.js 的启动和构建。
+3. 先学 Vue 后台：它更接近后端熟悉的管理台、路由、表单和状态。
+4. 再学 React + Next.js 前台：重点是 App Router、Server/Client Component 和文件路由。
+5. 最后学习 MDX、provider 抽象、搜索、图谱和真实 API 接入。
 
-## 学习顺序建议
+每个阶段都建议“读一个文件 → 改一个小点 → 跑 typecheck/test”，不要只看教程。
 
-推荐按下面的顺序推进，不要一开始就钻进 UI 细节或框架源码：
+## 第一阶段：语言和工程基础
 
-1. 先补 JavaScript / TypeScript 基础
-2. 再理解前端工程化和 Monorepo
-3. 再看 Vue 后台这条线
-4. 再看 React / Next.js 前台这条线
-5. 最后再进入搜索、图谱、多栏阅读这些产品能力
+### JavaScript / TypeScript
 
-## 第一层：必学基础
+掌握 `import/export`、Promise、`async/await`、数组方法、对象展开、可选链、`type/interface`、泛型、类型收窄和模块边界。
 
-这部分建议优先补，不然你后面会经常“代码能看懂一半，但不敢改”。
+项目入口：
 
-### 1. JavaScript / TypeScript 基础
+- [共享类型](../../packages/shared/src/types/content.ts)
+- [provider 接口](../../packages/shared/src/providers/content-provider.ts)
+- [前台内容读取](../../apps/web/lib/content.ts)
 
-你至少需要掌握这些概念：
+官方资料：
 
-- `import / export`
-- `async / await`
-- 数组常用方法：`map`、`filter`、`find`、`flatMap`
-- 对象展开：`...obj`
-- 可选链：`?.`
-- 类型定义：`type`、`interface`
-- 泛型的基本用途
-- 函数参数、返回值类型标注
+- [TypeScript Handbook](https://www.typescriptlang.org/docs/handbook/intro)
+- [TypeScript for Java/C# Programmers](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html)
+- [MDN JavaScript Guide](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide)
 
-在本项目里对应的位置：
+### 工程化和 Monorepo
 
-- [packages/shared/src/types/content.ts](D:/workspace/github/knowledge-web/packages/shared/src/types/content.ts)
-- [packages/shared/src/providers/content-provider.ts](D:/workspace/github/knowledge-web/packages/shared/src/providers/content-provider.ts)
-- [apps/web/lib/content.ts](D:/workspace/github/knowledge-web/apps/web/lib/content.ts)
+重点理解：`package.json` scripts、workspace 包引用、路径别名、`tsconfig`、Turbo task 依赖、`dev/build/typecheck/test` 的区别。
 
-你学到什么程度算够：
+项目入口：
 
-- 能看懂共享类型定义
-- 能看懂 provider 怎么返回数据
-- 能自己补一个字段，并让调用方跟着改通
+- [根脚本](../../package.json)
+- [workspace 定义](../../pnpm-workspace.yaml)
+- [Turbo 任务](../../turbo.json)
+- [共享 TS 配置](../../tsconfig.base.json)
 
-### 2. 前端工程化基础
+官方资料：
 
-这部分是“前端项目为什么能跑起来”的底层认知。
+- [pnpm Workspaces](https://pnpm.io/workspaces)
+- [Turborepo Handbook](https://turborepo.com/docs/handbook)
+- [Vite Guide](https://vite.dev/guide/)
 
-你需要理解：
+练习：新增一个 `packages/*` 小工具包，并让 `apps/web` 通过 workspace 依赖使用它；完成后删除或保留都可以，但要理解依赖方向。
 
-- `package.json` 是什么
-- `scripts` 是怎么执行的
-- `pnpm workspace` 是什么
-- Monorepo 为什么有 `apps/*` 和 `packages/*`
-- `tsconfig` / 路径别名是干什么的
-- `build`、`dev`、`typecheck`、`test` 分别验证什么
+## 第二阶段：Vue 后台线
 
-在本项目里对应的位置：
+先阅读这条链：
 
-- [package.json](D:/workspace/github/knowledge-web/package.json)
-- [pnpm-workspace.yaml](D:/workspace/github/knowledge-web/pnpm-workspace.yaml)
-- [turbo.json](D:/workspace/github/knowledge-web/turbo.json)
-- [tsconfig.base.json](D:/workspace/github/knowledge-web/tsconfig.base.json)
+```text
+apps/admin/src/main.ts
+  → App.vue
+  → router/index.ts
+  → views/AdminLayout.vue
+  → views/NavigationView.vue 等页面
+  → composables/use-metadata-collection.ts
+  → modules/admin-metadata-service.ts
+  → modules/metadata-workspace.ts
+  → LocalStorage / @knowledge/shared mock provider
+```
 
-你学到什么程度算够：
+重点掌握：Single-File Component、`script setup`、`ref/computed`、props/events、Pinia、Vue Router 守卫和 Element Plus。
 
-- 知道前台和后台为什么能共用 `packages/shared`
-- 知道新增一个包时为什么要挂到 `packages/*`
-- 知道根脚本和子应用脚本分别负责什么
+项目入口：
 
-## 第二层：与当前项目直接相关的前端知识
+- [Vue 启动入口](../../apps/admin/src/main.ts)
+- [后台路由](../../apps/admin/src/router/index.ts)
+- [认证 store](../../apps/admin/src/store/auth.ts)
+- [后台布局](../../apps/admin/src/views/AdminLayout.vue)
+- [通用集合 composable](../../apps/admin/src/composables/use-metadata-collection.ts)
+- [后台数据服务](../../apps/admin/src/modules/admin-metadata-service.ts)
+- [共享 Vue 组件](../../packages/ui-vue/src/AdminSection.vue)
 
-### 3. Vue 3 后台线
+官方资料：
 
-后台是给你最容易上手的一条线，因为它更接近传统“管理系统”思维。
+- [Vue 3 Guide](https://vuejs.org/guide/introduction.html)
+- [Vue Reactivity Fundamentals](https://vuejs.org/guide/essentials/reactivity-fundamentals.html)
+- [Pinia Introduction](https://pinia.vuejs.org/introduction.html)
+- [Vue Router Guide](https://router.vuejs.org/guide/)
+- [Element Plus](https://element-plus.org/en-US/)
 
-建议先掌握：
+练习：给后台增加一个只读统计卡片。先在 shared 类型中定义数据，再在 service 中提供数据，最后在 view 中展示；不要直接在模板里写死业务数据。
 
-- `Vue` 组件是什么
-- `template / script setup / style` 三段结构
-- `ref` 和响应式数据
-- `Pinia` 做什么
-- `Vue Router` 做什么
-- 登录态、路由守卫的基本流程
-- Element Plus 作为后台组件库如何使用
+## 第三阶段：React / Next.js 前台线
 
-优先看这些文件：
+Next.js 使用 App Router，目录和文件本身就是路由结构：
 
-- [apps/admin/src/views/LoginView.vue](D:/workspace/github/knowledge-web/apps/admin/src/views/LoginView.vue)
-- [apps/admin/src/views/AdminLayout.vue](D:/workspace/github/knowledge-web/apps/admin/src/views/AdminLayout.vue)
-- [apps/admin/src/router/index.ts](D:/workspace/github/knowledge-web/apps/admin/src/router/index.ts)
-- [apps/admin/src/store/auth.ts](D:/workspace/github/knowledge-web/apps/admin/src/store/auth.ts)
-- [packages/ui-vue/src/AdminSection.vue](D:/workspace/github/knowledge-web/packages/ui-vue/src/AdminSection.vue)
+```text
+apps/web/app/layout.tsx
+  → app/page.tsx
+  → app/articles/[slug]/page.tsx
+  → lib/content.ts
+  → MDX + KnowledgeWorkspace.tsx
+```
 
-建议你先从后台入手的原因：
+重点掌握：React props/state、hooks、Server Component 与 Client Component 的边界、`page.tsx`/`layout.tsx`、动态路由、`notFound()` 和客户端交互。
 
-- 页面结构更稳定
-- 状态流更直白
-- 更接近后端同学熟悉的“列表页 / 表单页 / 配置页”模式
+项目入口：
 
-### 4. React / Next.js 前台线
+- [全局布局](../../apps/web/app/layout.tsx)
+- [首页](../../apps/web/app/page.tsx)
+- [文章动态路由](../../apps/web/app/articles/[slug]/page.tsx)
+- [多栏阅读客户端组件](../../apps/web/app/KnowledgeWorkspace.tsx)
+- [React 公共组件](../../packages/ui-react/src/knowledge-shell.tsx)
+- [Workspace API 边界](../../apps/web/lib/workspace-api.ts)
 
-前台是这个项目真正的产品主入口，但理解门槛会比后台高一点。
+官方资料：
 
-建议重点掌握：
+- [Next.js App Router](https://nextjs.org/docs/app)
+- [Next.js Project Structure](https://nextjs.org/docs/app/getting-started/project-structure)
+- [Next.js Server and Client Components](https://nextjs.org/docs/app/getting-started/server-and-client-components)
+- [React Learn](https://react.dev/learn)
+- [TanStack Query](https://tanstack.com/query/latest/docs/framework/react/overview)
 
-- React 组件和 `props`
-- `useState`
-- Server Component 和 Client Component 的区别
-- Next.js App Router 的目录式路由
-- `page.tsx`、`layout.tsx` 的作用
-- 为什么内容站适合 `Next.js + MDX`
-- Zustand / TanStack Query 在这里分别解决什么问题
+练习：新增一个文章分类页。先在 `lib/content.ts` 暴露查询函数，再添加 `app/categories/[category]/page.tsx`，最后复用 `packages/ui-react` 组件。
 
-优先看这些文件：
+## 第四阶段：内容模型和可替换能力
 
-- [apps/web/app/page.tsx](D:/workspace/github/knowledge-web/apps/web/app/page.tsx)
-- [apps/web/app/articles/[slug]/page.tsx](D:/workspace/github/knowledge-web/apps/web/app/articles/[slug]/page.tsx)
-- [apps/web/app/KnowledgeWorkspace.tsx](D:/workspace/github/knowledge-web/apps/web/app/KnowledgeWorkspace.tsx)
-- [apps/web/lib/content.ts](D:/workspace/github/knowledge-web/apps/web/lib/content.ts)
-- [packages/ui-react/src/knowledge-shell.tsx](D:/workspace/github/knowledge-web/packages/ui-react/src/knowledge-shell.tsx)
+### MDX
 
-你学到什么程度算够：
+阅读 [示例文章](../../apps/web/content/articles/security-login-overview.mdx) 和 [文章模板](../../templates/content-entry/article-template.mdx)，理解 frontmatter 如何映射到 `ArticleMeta`，正文为什么和元数据分开。
 
-- 能看懂一篇文章是怎么从 `MDX` 被读取、解析、展示出来的
-- 能看懂“主栏 + 右侧关联栏”是怎么组织状态的
-- 能自己加一条文章路由或一个简单的页面块
+### Provider
 
-## 第三层：项目能力相关知识
+阅读：
 
-### 5. MDX / 内容建模
+- [ContentProvider](../../packages/shared/src/providers/content-provider.ts)
+- [SearchProvider](../../packages/shared/src/providers/search-provider.ts)
+- [GraphProvider](../../packages/shared/src/providers/graph-provider.ts)
+- [后台元数据 Provider](../../packages/shared/src/providers/admin-metadata-provider.ts)
 
-这个项目首期是“Repo 内内容源”，所以 MDX 很重要。
+把 provider 理解成后端里的 port/interface：页面依赖接口，mock、HTTP、ES 是不同 adapter。接入真实后端时，优先新增实现和 DTO，不要让页面直接 fetch 每个接口。
 
-你需要理解：
+### 状态模型
 
-- frontmatter 是什么
-- 一篇文章的元数据和正文为什么分开
-- 为什么 `categoryPath`、`relatedArticles`、`concepts` 要前置建模
+阅读 [reading-panels.ts](../../packages/shared/src/state/reading-panels.ts)。它是纯函数状态变换，适合用单元测试验证“打开、聚焦、折叠、关闭”这些规则。
 
-优先看：
+## 第五阶段：真实后端联调
 
-- [apps/web/content/articles/security-login-overview.mdx](D:/workspace/github/knowledge-web/apps/web/content/articles/security-login-overview.mdx)
-- [templates/content-entry/article-template.mdx](D:/workspace/github/knowledge-web/templates/content-entry/article-template.mdx)
+建议按这个顺序替换当前 demo：
 
-### 6. Provider 思维
+1. 在 `packages/api-contract` 定义请求、响应、分页和错误结构。
+2. 在 `packages/shared/src/providers` 增加 API provider。
+3. 后台把 `metadata-workspace` 的 LocalStorage 持久化替换成 service 调用。
+4. 前台把 `lib/content.ts` 的本地 MDX 查询逐步替换成服务端内容 provider。
+5. 搜索 provider 再替换为 ES 或后端搜索接口。
+6. 最后补登录、权限、缓存、错误态和 loading 态。
 
-这个项目有意把“内容读取、搜索、关系图、后台元数据”先做成 provider 抽象。
+后端开发者最需要特别留意：浏览器端代码不是可信边界；权限不能只靠路由守卫，接口必须在服务端校验；`NEXT_PUBLIC_*` 变量会暴露给浏览器，不应放密钥。
 
-你需要理解：
+## 每次改动的检查清单
 
-- 为什么先不直接写死 ES
-- 为什么 mock provider 对首期很重要
-- 为什么这能让前端先跑起来，再逐步替换真实后端能力
+- 这是应用特有逻辑，还是共享领域能力？
+- 是否应该先改 `shared` / `api-contract` 再改页面？
+- 是否混淆了 Server Component 和 Client Component？
+- 是否把持久化、请求或权限逻辑写进了纯展示组件？
+- 是否补了对应的类型和测试？
+- 执行 `pnpm typecheck`；测试脚本稳定后再执行 `pnpm test`。
 
-优先看：
-
-- [packages/shared/src/providers/content-provider.ts](D:/workspace/github/knowledge-web/packages/shared/src/providers/content-provider.ts)
-- [packages/shared/src/providers/search-provider.ts](D:/workspace/github/knowledge-web/packages/shared/src/providers/search-provider.ts)
-- [packages/shared/src/providers/graph-provider.ts](D:/workspace/github/knowledge-web/packages/shared/src/providers/graph-provider.ts)
-
-### 7. 图谱与多栏阅读
-
-这部分先理解“为什么这样设计”，不用一开始就去学复杂图形库。
-
-你现在只需要先理解：
-
-- `文章 / 概念 / 专题` 是点
-- `引用 / 延伸 / 前置 / 方案` 是边
-- 多栏阅读是“围绕当前文章不断展开上下文”
-
-先看：
-
-- [packages/shared/src/types/content.ts](D:/workspace/github/knowledge-web/packages/shared/src/types/content.ts)
-- [packages/shared/src/state/reading-panels.ts](D:/workspace/github/knowledge-web/packages/shared/src/state/reading-panels.ts)
-- [apps/web/app/KnowledgeWorkspace.tsx](D:/workspace/github/knowledge-web/apps/web/app/KnowledgeWorkspace.tsx)
-
-## 作为后端，你的推荐学习节奏
-
-建议按这个顺序来，边学边改，不要纯看资料：
-
-1. 先把后台跑起来，理解 `router + store + 页面壳子`
-2. 再把前台跑起来，理解 `文章读取 + 页面渲染`
-3. 自己新增一篇 MDX 文章
-4. 再给后台加一个简单管理页或统计卡片
-5. 再尝试给前台加一个分类页 / 概念页
-6. 最后再去接搜索、图谱、真实后端接口
-
-## 后续建议继续沉淀的主题
-
-后面你可以在 `docs/learning` 下继续补自己的学习笔记，建议一类一个文件：
-
-- `javascript-typescript.md`
-- `vue-admin-basics.md`
-- `react-next-basics.md`
-- `mdx-content-model.md`
-- `search-and-graph-roadmap.md`
-
-推荐写法不要像教程摘要，更像“这个项目里我实际遇到的知识点解释 + 代码落点 + 改法”。
-
+当前仓库的 `pnpm typecheck` 已可通过；根 `pnpm test` 仍有测试发现配置问题，详见 [搭建与修改指南](../guide/README.md) 的验证章节。

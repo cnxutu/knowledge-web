@@ -4,6 +4,6 @@ export default defineConfig({
   test: {
     environment: "node",
     exclude: ["**/.pnpm-store/**", "**/node_modules/**"],
-    include: ["packages/shared/src/__tests__/**/*.test.ts"]
+    include: ["src/__tests__/**/*.test.ts"]
   }
 });

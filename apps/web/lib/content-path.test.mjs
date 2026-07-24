@@ -2,7 +2,7 @@ import path from "node:path";
 import { describe, expect, it } from "vitest";
 import { resolveArticlesDir } from "./content";
 
-const repoRoot = "D:/workspace/github/knowledge-web";
+const repoRoot = path.resolve(process.cwd(), "../..");
 
 describe("resolveArticlesDir", () => {
   it("finds the articles directory when web is started from the repo root", () => {

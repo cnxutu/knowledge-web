@@ -120,9 +120,11 @@ pnpm build:web
 
 ### 当前验证重点
 
-- `test`：主要验证共享层逻辑
+- `test`：主要验证共享层逻辑；当前根命令仍会因 Vitest include 路径与 package cwd 不一致而失败，修复后再把它作为稳定门禁
 - `typecheck`：保证前后台和共享类型链路一致
 - `build`：保证前后台都能产出可构建结果
+
+当前已知验证问题：`packages/shared/vitest.config.ts` 使用包目录执行时应采用包内相对路径。若看到 `No test files found`，先确认 include 已为 `src/__tests__/**/*.test.ts`；另外 admin/web 的 test script 目前仍是占位实现。
 
 ## 6. 目录应该怎么理解
 
