@@ -23,7 +23,32 @@ async function request<T>(path: string, init?: RequestInit, parseJson = true): P
 export function getDocument(date: string) { return request<WorkspaceDocument | null>(`/documents/${date}`); }
 export function getHistory() { return request<HistoryItem[]>("/documents"); }
 export function getMarkdown(date: string) { return request<string>(`/documents/${date}/markdown`, undefined, false); }
-export function previewDocument(document: WorkspaceDocument) { return request<{ templateCode: string; markdown: string }>("/preview", { method: "POST", body: JSON.stringify({ templateCode: document.templateCode, document }) }); }
+function localPreview(document: WorkspaceDocument) {
+  const lines = [`# ${document.title || "每日工作记录"}`, "", `> ${document.date}`, ""];
+  for (const category of document.workItems) {
+    lines.push(`## ${category.name}`, "");
+    for (const item of category.items) {
+      const status = item.status === "DONE" ? "x" : " ";
+      lines.push(`- [${status}] **${item.title || "未命名事项"}** · ${item.status}`);
+      if (item.summary) lines.push(`  - ${item.summary}`);
+      if (item.details) lines.push("", item.details);
+      if (item.tags.length) lines.push("", `标签：${item.tags.map((tag) => `\`#${tag}\``).join(" ")}`);
+      lines.push("");
+    }
+  }
+  if (document.nextActions.length) {
+    lines.push("## 明日计划", "");
+    for (const action of document.nextActions) lines.push(`- [${action.done ? "x" : " "}] ${action.title || "待补充"}`);
+  }
+  return { templateCode: document.templateCode, markdown: lines.join("\n").trim() };
+}
+
+export function previewDocument(document: WorkspaceDocument) {
+  return request<{ templateCode: string; markdown: string }>("/preview", { method: "POST", body: JSON.stringify({ templateCode: document.templateCode, document }) }).catch((error) => {
+    if (error instanceof TypeError || (error instanceof Error && error.message === "Failed to fetch")) return localPreview(document);
+    throw error;
+  });
+}
 export function publishDocument(document: WorkspaceDocument) { return request<{ document: WorkspaceDocument; jsonPath: string; markdownPath: string; markdown: string }>("/publish", { method: "POST", body: JSON.stringify(document) }); }
 export function previewArticle(article: KnowledgeArticle) { return request<{ markdown: string }>("/articles/preview", { method: "POST", body: JSON.stringify({ article }) }); }
 export function publishArticle(article: KnowledgeArticle) { return request<{ article: KnowledgeArticle; jsonPath: string; markdownPath: string; markdown: string }>("/articles/publish", { method: "POST", body: JSON.stringify(article) }); }
